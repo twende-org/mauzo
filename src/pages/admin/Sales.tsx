@@ -138,7 +138,7 @@ export default function Sales() {
       {/* KICHWA */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-[#20B2AA] flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-primary md:text-3xl flex items-center gap-2">
             <FaCashRegister /> Mauzo ya POS
           </h1>
           <p className="text-sm text-gray-500 mt-2">

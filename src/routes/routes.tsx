@@ -41,7 +41,7 @@ export const routes: RouteConfig[] = [
       { path: '', element: <Dashboard1 /> },
       { path: 'sales', element: <Sales /> },
       { path: 'stock', element: <Stock /> },
-      { path: 'users', element: <Users /> },
+      { path: 'users', element: <Users businessId={''} /> },
       { path: 'report', element: <Report /> },
       { path: 'expenses', element: <Expenses /> },
       { path: 'products', element: <Products /> },

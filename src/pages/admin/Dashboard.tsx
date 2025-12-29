@@ -120,8 +120,8 @@ export default function POSDashboard() {
     <div className="p-4 md:p-6 bg-gray-50 min-h-screen space-y-6">
       {/* KICHWA */}
       <div className="flex items-center gap-2">
-        <FaChartLine className="text-blue-600 text-2xl" />
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+        <FaChartLine className="text-primary text-2xl" />
+        <h2 className="text-2xl md:text-3xl font-bold text-primary">
           Dashibodi ya POS
         </h2>
       </div>
@@ -142,7 +142,7 @@ export default function POSDashboard() {
 
       {/* KADI ZA MUHTASARI */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <KPI label="Mauzo" value={totals.revenue} icon={<FaMoneyBillWave />} color="green" />
+        <KPI label="Mauzo" value={totals.revenue} icon={<FaMoneyBillWave  />} color="green" />
         <KPI label="Matumizi" value={totals.expenses} icon={<FaBox />} color="yellow" />
         <KPI label="Hasara / Uharibifu" value={totals.waste} suffix=" vipande" icon={<FaFire />} color="red" />
         <KPI label="Faida" value={totals.profit} icon={<FaMoneyBillWave />} color="purple" highlight />

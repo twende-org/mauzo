@@ -1,16 +1,11 @@
-// src/store/features/users/usersSlice.ts
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
-import { addUser, getUsers, updateUser, deleteUser } from "../../../services/userService";
+import { addUser, getUsersByBusiness, updateUser, deleteUser, type AppUser, type UserRole } from "../../../services/userService";
 
-interface User {
-  sales: any;
-  id: string;
-  name: string;
-  contact: string;
-  route: string;
-  totalSales: number;
-  createdAt: any;
-}
+/* =======================
+   TYPES
+======================= */
+
+export interface User extends AppUser {}
 
 interface UsersState {
   users: User[];
@@ -24,97 +19,126 @@ const initialState: UsersState = {
   error: null,
 };
 
-// Async thunks
+/* =======================
+   THUNKS
+======================= */
 
-export const fetchUsers = createAsyncThunk<User[]>("users/fetch", async () => {
-  const users = await getUsers();
-  return users as User[];
-});
-
-export const createUser = createAsyncThunk<User, { name: string; contact: string; route: string }>(
-  "users/create",
-  async (user: { name: string; contact: string; route: string }) => {
-    const id = await addUser(user);
-    return { id, ...user, totalSales: 0, createdAt: new Date(), sales: [] };
+// Fetch users for a business
+export const fetchUsers = createAsyncThunk<User[], string>(
+  "users/fetch",
+  async (businessId, { rejectWithValue }) => {
+    try {
+      return await getUsersByBusiness(businessId);
+    } catch (err: any) {
+      return rejectWithValue(err.message);
+    }
   }
 );
 
+// Add user (with email + Firebase Auth)
+export const createUser = createAsyncThunk<User, {
+  email: string;
+  password: string;
+  name: string;
+  contact?: string;
+  route?: string;
+  businessId: string;
+  role?: UserRole;
+}>(
+  "users/create",
+  async (user, { rejectWithValue }) => {
+    try {
+      // 1️⃣ Create Auth user & Firestore document
+      const id = await addUser(user);
+
+      const createdAt = new Date().toISOString();
+
+      // 2️⃣ Return User type for Redux state
+      return {
+        id,
+        uid: "", // Firestore UID is stored
+        email: user.email,
+        name: user.name,
+        contact: user.contact ?? "",
+        route: user.route ?? "",
+        businessId: user.businessId,
+        role: user.role ?? "seller",
+        totalSales: 0,
+        active: true,
+        createdAt,
+      } as User;
+    } catch (err: any) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+
+// Update user
 export const editUser = createAsyncThunk(
   "users/update",
-  async ({ id, data }: { id: string; data: Partial<{ name: string; contact: string; route: string }> }) => {
-    await updateUser(id, data);
-    return { id, data };
+  async ({ id, data }: { id: string; data: Partial<User> }, { rejectWithValue }) => {
+    try {
+      await updateUser(id, data);
+      return { id, data };
+    } catch (err: any) {
+      return rejectWithValue(err.message);
+    }
   }
 );
 
-export const removeUser = createAsyncThunk("users/delete", async (id: string) => {
-  await deleteUser(id);
-  return id;
-});
+// Delete user
+export const removeUser = createAsyncThunk(
+  "users/delete",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      await deleteUser(id);
+      return id;
+    } catch (err: any) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
 
-// Slice
+/* =======================
+   SLICE
+======================= */
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Fetch users
-    builder.addCase(fetchUsers.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
+    // Fulfilled
     builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
       state.loading = false;
       state.users = action.payload;
-    });
-    builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "Failed to fetch users";
-    });
-
-    // Create user
-    builder.addCase(createUser.pending, (state) => {
-      state.loading = true;
-      state.error = null;
     });
     builder.addCase(createUser.fulfilled, (state, action: PayloadAction<User>) => {
       state.loading = false;
       state.users.push(action.payload);
     });
-    builder.addCase(createUser.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "Failed to create user";
-    });
-
-    // Update user
-    builder.addCase(editUser.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
     builder.addCase(editUser.fulfilled, (state, action: PayloadAction<{ id: string; data: Partial<User> }>) => {
       state.loading = false;
-      const index = state.users.findIndex((u) => u.id === action.payload.id);
+      const index = state.users.findIndex(u => u.id === action.payload.id);
       if (index !== -1) state.users[index] = { ...state.users[index], ...action.payload.data };
-    });
-    builder.addCase(editUser.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "Failed to update user";
-    });
-
-    // Delete user
-    builder.addCase(removeUser.pending, (state) => {
-      state.loading = true;
-      state.error = null;
     });
     builder.addCase(removeUser.fulfilled, (state, action: PayloadAction<string>) => {
       state.loading = false;
-      state.users = state.users.filter((u) => u.id !== action.payload);
+      state.users = state.users.filter(u => u.id !== action.payload);
     });
-    builder.addCase(removeUser.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "Failed to delete user";
-    });
+
+    // Pending matcher
+    builder.addMatcher(
+      (action) => action.type.startsWith("users/") && action.type.endsWith("/pending"),
+      (state) => { state.loading = true; state.error = null; }
+    );
+
+    // Rejected matcher
+    builder.addMatcher(
+      (action) => action.type.startsWith("users/") && action.type.endsWith("/rejected"),
+      (state, action: any) => { state.loading = false; state.error = action.payload; }
+    );
   },
 });
 

@@ -9,6 +9,10 @@ import productionSlice from "./features/products/productionSlice";
 import inventorySlice from "./features/inventory/inventorySlice";
 import sellersSlice from "./features/sellers/sellersSlice";
 import productsSlice from "./features/products/productsSlice";
+import sessionReducer from "./features/sessions/sessionSlice";
+
+
+
 export const store=configureStore({
     reducer:{
         auth:authSlice,
@@ -20,7 +24,8 @@ export const store=configureStore({
         production:productionSlice,
         inventory:inventorySlice,
         sellers:sellersSlice,
-        products:productsSlice
+        products:productsSlice,
+        session:sessionReducer,
     },
 });
 

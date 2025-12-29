@@ -92,7 +92,7 @@ export default function Products() {
 
     return (
         <div className="p-4 md:p-6 space-y-6 bg-gray-50 min-h-screen">
-            <h1 className="text-xl md:text-2xl font-bold text-[#20B2AA]">
+            <h1 className="text-2xl md:text-3xl font-bold text-primary">
                 Usimamizi wa Bidhaa
             </h1>
             <p className="text-sm text-gray-500 mt-2">

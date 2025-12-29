@@ -107,8 +107,8 @@ export default function Expenses() {
     <div className="p-4 md:p-6 space-y-6 bg-gray-50 min-h-screen w-full max-w-full overflow-hidden">
       {/* HEADER */}
       <div className="flex items-center gap-3">
-        <FaPlus className="text-2xl text-blue-600" />
-        <h1 className="text-2xl font-bold text-gray-800">Matumizi ya Kila Siku</h1>
+        <FaPlus className="text-2xl text-primary" />
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">Matumizi ya Kila Siku</h1>
       </div>
 
       {/* FORM YA KUONGEZA / KUBADILI */}

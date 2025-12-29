@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { routes } from './routes/routes';
 import OfflineNotification from './components/OfflineNotification';
 import AppLoader from './components/ui/AppLoader';
+import { useAppDispatch } from './store/hooks';
+import { listenToAuth } from './store/features/sessions/sessionSlice';
 
 function renderRoutes(routesArray: typeof routes) {
   return routesArray.map(({ path, element, children }) => (
@@ -13,7 +15,13 @@ function renderRoutes(routesArray: typeof routes) {
 }
 
 export default function App() {
+  const dispatch=useAppDispatch()
   const [isAppLoading, setIsAppLoading] = useState(true);
+
+
+useEffect(()=>{
+  dispatch(listenToAuth())
+},[])
 
   useEffect(() => {
     // Hapa ndipo unaweza kuweka logic ya kukagua Login au kupakia data

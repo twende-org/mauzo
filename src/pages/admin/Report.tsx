@@ -167,12 +167,12 @@ const dispatchRecords = dispatchRecordsRaw.map(d => ({
     { label: 'Muuzaji Bora', value: bestSeller?.sellerName || '—', icon: <FaUserTie /> },
   ];
 
-  if (loading) return <div className="p-6 text-center text-gray-600">Inapakia ripoti...</div>;
+  // if (loading) return <div className="p-6 text-center text-gray-600">Inapakia ripoti...</div>;
 
   // ----------------- JSX -----------------
   return (
     <div className="p-4 md:p-6 bg-gray-50 min-h-screen space-y-6 overflow-x-hidden">
-      <h3 className="text-2xl font-bold text-gray-800">Ripoti ya Dispatch na Matumizi</h3>
+      <h3 className="text-2xl md:text-3xl font-bold text-primary">Ripoti ya Mapato na Matumizi</h3>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
@@ -209,7 +209,7 @@ const dispatchRecords = dispatchRecordsRaw.map(d => ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, i) => (
           <div key={i} className="bg-gray-100 p-6 rounded-xl shadow flex items-center space-x-4 border border-gray-100">
-            <div className="p-3 rounded-lg text-white text-3xl" style={{ backgroundColor: '#4F46E5' }}>{stat.icon}</div>
+            <div className="p-3 rounded-lg text-white text-3xl" style={{ backgroundColor: '#20B2AA' }}>{stat.icon}</div>
             <div>
               <p className="text-sm text-gray-600 font-medium truncate">{stat.label}</p>
               <p className="text-xl font-bold text-gray-800 truncate">{stat.value}</p>
