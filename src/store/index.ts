@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice  from "./features/auth/authSlice";
 import expensesSlice from "./features/expenses/expensesSlice";
 import salesSlice from "./features/sales/salesSlice";
-import stockSlice from "./features/stock/stockSlice";
 import usersSlice from "./features/user/usersSlice";
 import dispatchSlice from "./features/sales/dispatchSlice";
 import dailySalesSlice from "./features/sales/dailySalesSlice";
@@ -15,7 +14,6 @@ export const store=configureStore({
         auth:authSlice,
         expenses:expensesSlice,
         sales:salesSlice,
-        stock:stockSlice,
         users:usersSlice,
         dispatch:dispatchSlice,
         dailySales:dailySalesSlice,

@@ -34,34 +34,59 @@ const Login = () => {
   
 
   return (
-    <div className=" mx-auto mt-4 rounded-md shadow-ld p-6 bg-white/30">
-      <h3 className="text-center mt-4 p-4">Login</h3>
+      <div className="min-h-[80vh] flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slide-down">
+        <div className="h-2 bg-primary w-full" />
+        <div className="p-8">
+          <div className="text-center mb-8">
+            <h2 className="!text-gray-800 mb-2">Karibu Tena</h2>
+            <h3 className="text-sm font-normal">Ingia kuendelea na MauzoPlus</h3>
+          </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <InputField
-          label="Email"
-          name="email"
-          type="email"
-          value={email}
-          placeholder="Enter your email"
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={loading}
-        />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <InputField
+              label="Barua Pepe"
+              type="email"
+              name="email"
+              placeholder="email@anuani.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+            />
 
-        <InputField
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          disabled={loading}
-        />
+            <InputField
+              label="Nywila"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
+            />
 
-        <Button type="submit" variant="primary" >
-          {loading? "Ingia..." : "Ingia"}
-        </Button>
-      </form>
+            <Button 
+              type="submit" 
+              className="w-full py-3 bg-primary text-white font-bold rounded-lg shadow-md hover:opacity-90 transition-opacity"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                   <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                   </svg>
+                   Inapakia...
+                </span>
+              ) : "Ingia Mfumo"}
+            </Button>
+          </form>
+        </div>
+        
+        {/* <div className="bg-gray-50 p-4 text-center border-t border-gray-100">
+           <p className="text-sm !text-gray-500">
+             Huna akaunti? <span className="text-primary font-bold cursor-pointer hover:underline">Sajili Biashara</span>
+           </p>
+        </div> */}
+      </div>
     </div>
   )
 }

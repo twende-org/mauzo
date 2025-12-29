@@ -1,21 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html",
-  "./src/**/*.{js,ts,jsx,tsx}",
-],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-       colors: {
-      primary: '#20B2AA',
-    },
-     fontFamily: {
-        sans: ['Poppins', 'ui-sans-serif', 'system-ui'],
+      colors: { primary: '#20B2AA' },
+      animation: {
+        'infinite-scroll': 'infinite-scroll 25s linear infinite',
       },
-       animation: {
-      'slide-down': 'slide-down 0.3s ease-out',
-    },
+      keyframes: {
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        }
+      }
     },
   },
   plugins: [],
 }
-

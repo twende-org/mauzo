@@ -30,3 +30,15 @@ h3{
 p {
   @apply text-base text-gray-800;
 }
+
+/* In your main CSS file (e.g., globals.css or app.css) */
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    scroll-behavior: smooth; /* Optional: makes scrolling smoother with mouse wheel/trackpad */
+}

@@ -4,67 +4,86 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
 
+  const businessTypes = [
+    { name: "Maduka ya Rejareja", icon: "🛍️" },
+    { name: "Migahawa", icon: "🍽️" },
+    { name: "Supermarket", icon: "🛒" },
+    { name: "Pharmacy", icon: "💊" },
+    { name: "Salooni", icon: "✂️" },
+    { name: "Electronics", icon: "💻" },
+    { name: "Duka la Mavazi", icon: "👕" },
+    { name: "Hardware", icon: "🔨" },
+  ];
+
   return (
-    <div className="space-y-20">
-      {/* Intro Section */}
-      <section className="text-center max-w-3xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-          Dhibiti Mauzo Yako kwa Njia Rahisi
-        </h2>
-        <p className="text-gray-600 text-lg">
-          <span className="font-semibold text-primary">MauzoPlus</span> ni mfumo
-          wa kisasa wa POS unaokuwezesha kusimamia mauzo, bidhaa, na ripoti za
-          biashara yako kwa ufanisi.
-        </p>
+    <div className="animate-slide-down">
+      {/* Hero Section - Responsive Padding & Text */}
+      <section className="bg-primary pt-16 pb-20 px-4 md:py-32">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl mb-6 leading-tight">
+            Dhibiti Mauzo Yako kwa Njia Rahisi
+          </h1>
+          <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            MauzoKidijitali ni mfumo wa kisasa wa POS unaokuwezesha kusimamia mauzo, 
+            bidhaa, na ripoti za biashara yako kwa ufanisi na haraka.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
+            <Button 
+              className="border-2 border-white bg-transparent text-white hover:bg-white/10 px-8 py-3 font-bold w-full sm:w-auto"
+              onClick={() => navigate("/login")}
+            >
+              Anza Kutumia
+            </Button>
 
-        <div className="mt-8 flex justify-center gap-4">
-          <Button onClick={() => navigate("/login")}>
-            Anza Kutumia
-          </Button>
-          <Button variant="secondary">
-            Jifunze Zaidi
-          </Button>
+          </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="grid md:grid-cols-3 gap-8">
-        <div className="p-6 rounded-xl shadow-sm border bg-white text-center">
-          <h3 className="text-xl font-semibold mb-2">Haraka & Rahisi</h3>
-          <p className="text-gray-600">
-            Fanya mauzo kwa sekunde chache bila usumbufu wowote.
-          </p>
-        </div>
-
-        <div className="p-6 rounded-xl shadow-sm border bg-white text-center">
-          <h3 className="text-xl font-semibold mb-2">Ripoti Sahihi</h3>
-          <p className="text-gray-600">
-            Pata taarifa za mauzo, faida na bidhaa papo hapo.
-          </p>
-        </div>
-
-        <div className="p-6 rounded-xl shadow-sm border bg-white text-center">
-          <h3 className="text-xl font-semibold mb-2">Dhibiti Bidhaa</h3>
-          <p className="text-gray-600">
-            Angalia stock, bei na mauzo yote kwa urahisi.
-          </p>
+      {/* Benefits Section - Responsive Grid */}
+      <section className="max-w-7xl mx-auto px-4 mt-4 sm:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { title: "Haraka & Rahisi", desc: "Fanya mauzo kwa sekunde chache bila usumbufu wowote.", icon: "⚡" },
+            { title: "Ripoti Sahihi", desc: "Pata taarifa za mauzo, faida na bidhaa papo hapo.", icon: "📈" },
+            { title: "Dhibiti Bidhaa", desc: "Angalia stock, bei na mauzo yote kwa urahisi.", icon: "📦" }
+          ].map((feature, idx) => (
+            <div key={idx} className="p-6 md:p-8 rounded-2xl bg-white border-t-4 border-primary shadow-xl hover:translate-y-[-5px] transition-all text-center">
+              <div className="text-4xl mb-4 text-primary">{feature.icon}</div>
+              <h3 className="mb-2 !text-gray-800 font-bold">{feature.title}</h3>
+              <p className="!text-gray-600 text-sm md:text-base">{feature.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Business Types */}
-      <section className="bg-gray-50 p-10 rounded-2xl">
-        <h3 className="text-2xl font-bold text-center mb-8">
-          Inafaa kwa Biashara Zote
-        </h3>
-
-        <div className="grid md:grid-cols-4 gap-6 text-center">
-          <div className="p-4 bg-white rounded-lg shadow-sm">Maduka ya Rejareja</div>
-          <div className="p-4 bg-white rounded-lg shadow-sm">Migahawa</div>
-          <div className="p-4 bg-white rounded-lg shadow-sm">Supermarket</div>
-          <div className="p-4 bg-white rounded-lg shadow-sm">Pharmacy</div>
+      {/* Business Types Section - Infinite/Manual Responsive Scroll */}
+      <section className="bg-gray-50 py-5 md:py-4 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-center mb-10 md:mb-16 !text-gray-800 font-bold text-2xl md:text-4xl">
+            Inafaa kwa Biashara Zote
+          </h2>
+          
+          {/* Horizontal Scroll Wrapper */}
+          <div className="relative">
+            <div className="flex overflow-x-auto gap-4 md:gap-6 pb-8 scrollbar-hide snap-x touch-pan-x">
+              {businessTypes.map((biz, idx) => (
+                <div 
+                  key={idx} 
+                  className="flex-shrink-0 w-[200px] md:w-[240px] p-6 bg-white rounded-2xl shadow-sm text-center border-t-4 border-primary snap-center hover:shadow-md transition-all"
+                >
+                  <div className="text-3xl mb-3">{biz.icon}</div>
+                  <span className="font-bold text-gray-700 block">{biz.name}</span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Mobile Visual Hint */}
+            <div className="md:hidden text-center text-xs text-gray-400 mt-2 animate-pulse">
+              Tanguliza kushoto kuona zaidi ⮕
+            </div>
+          </div>
         </div>
       </section>
-
     </div>
   );
 };
