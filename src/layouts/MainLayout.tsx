@@ -62,13 +62,13 @@ export default function MainLayout() {
                 {isMenuOpen && !isAuthPage && (
                     <div className="md:hidden bg-white border-b border-gray-100 animate-slide-down">
                         <div className="px-4 pt-2 pb-6 space-y-3 shadow-inner">
-                            <Link 
+                            {/* <Link 
                                 to="/" 
                                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-md"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Nyumbani
-                            </Link>
+                            </Link> */}
                             <div className="grid grid-cols-1 gap-2 pt-2">
                                 <Button variant="secondary" onClick={() => { navigate('/login'); setIsMenuOpen(false); }}>
                                     Ingia

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FiWifiOff, FiAlertCircle } from 'react-icons/fi';
+import { FiWifiOff, FiCheckCircle } from 'react-icons/fi';
 
 export default function OfflineNotification() {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
@@ -12,7 +12,7 @@ export default function OfflineNotification() {
     };
     const handleOnline = () => {
       setIsOffline(false);
-      // Tunachelewesha kuificha ili mtumiaji aone imerudi online
+      // Tunachelewesha kuificha ili mtumiaji aone ujumbe wa mafanikio
       setTimeout(() => setIsVisible(false), 3000);
     };
 
@@ -28,46 +28,55 @@ export default function OfflineNotification() {
   if (!isOffline && !isVisible) return null;
 
   return (
-    <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-md transition-all duration-500 ease-in-out ${
-      isOffline ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'
-    }`}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Background Overlay - Inalinda data zisiharibike mtandao ukiwa hamna */}
+      <div 
+        className={`absolute inset-0 bg-gray-900/40 backdrop-blur-[2px] transition-opacity duration-500 ${
+          isOffline ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`} 
+      />
+
+      {/* Main Notification Card - Inakaa katikati (Center) */}
       <div className={`
-        relative overflow-hidden rounded-2xl p-4 shadow-2xl border backdrop-blur-md
+        relative w-full max-w-sm overflow-hidden rounded-3xl p-8 shadow-2xl transition-all duration-500 ease-out
         ${isOffline 
-          ? 'bg-white/90 border-red-100' 
-          : 'bg-primary/90 border-primary/20 text-white'}
+          ? 'scale-100 opacity-100 bg-white border-b-8 border-red-500' 
+          : 'scale-90 opacity-0 bg-primary text-white border-none'}
       `}>
-        {/* Animated Background Pulse for attention */}
+        
+        {/* Decorative background element */}
         {isOffline && (
-          <div className="absolute inset-0 bg-red-500/5 animate-pulse" />
+          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-red-50 rounded-full opacity-50" />
         )}
 
-        <div className="relative flex items-center gap-4">
+        <div className="relative text-center flex flex-col items-center">
           <div className={`
-            flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
-            ${isOffline ? 'bg-red-100 text-red-600' : 'bg-white text-primary'}
+            w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg
+            ${isOffline ? 'bg-red-50 text-red-500' : 'bg-white/20 text-white'}
           `}>
-            {isOffline ? <FiWifiOff size={24} /> : <FiAlertCircle size={24} />}
+            {isOffline ? <FiWifiOff size={40} /> : <FiCheckCircle size={40} />}
           </div>
 
-          <div className="flex-1">
-            <h4 className={`text-sm font-bold uppercase tracking-wider ${isOffline ? 'text-red-600' : 'text-white'}`}>
-              {isOffline ? 'Mtandao Umekatika' : 'Mtandao Umerudi'}
-            </h4>
-            <p className={`text-sm leading-tight ${isOffline ? 'text-gray-600' : 'text-white/90'}`}>
-              {isOffline 
-                ? 'Huwezi kufanya mauzo ya mtandaoni kwa sasa. Angalia data au Wi-Fi.' 
-                : 'Mfumo umerudi hewani. Unaweza kuendelea.'}
-            </p>
-          </div>
+          <h3 className={`text-xl font-black mb-2 ${isOffline ? 'text-gray-800' : 'text-white'}`}>
+            {isOffline ? 'Mtandao Umekatika' : 'Mtandao Umerudi!'}
+          </h3>
+          
+          <p className={`text-base leading-relaxed ${isOffline ? 'text-gray-500' : 'text-white/90'}`}>
+            {isOffline 
+              ? 'Tafadhali angalia muunganisho wako wa mtandao ili uweze kuendelea na mauzo.' 
+              : 'Hongera! Mfumo umerudi hewani na kila kitu kiko tayari.'}
+          </p>
 
           {isOffline && (
-            <div className="flex flex-col items-center">
-               <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-              </span>
-            </div>
+             <div className="mt-8 flex items-center gap-2 px-4 py-2 bg-red-50 rounded-full">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                </span>
+                <span className="text-xs font-bold text-red-600 uppercase tracking-widest">
+                  Jaribu Tena...
+                </span>
+             </div>
           )}
         </div>
       </div>
