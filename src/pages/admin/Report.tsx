@@ -79,6 +79,8 @@ export default function Report() {
   const [filterDate, setFilterDate] = useState<Date | null>(new Date());
   const loading = dispatchLoading || expensesLoading || sellersLoading;
 
+  if(!loading) return <div>Loading</div>;
+
   // ----------------- Normalize Timestamps -----------------
 const dispatchRecords = dispatchRecordsRaw.map(d => ({
   ...d,
