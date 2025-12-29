@@ -18,7 +18,7 @@ const navItems = [
   { label: 'Dashibodi', to: '/dashboard', end: true, icon: <FaTachometerAlt /> },
   { label: 'Mauzo', to: '/dashboard/sales', icon: <FaDollarSign /> },
   { label: 'Stoko', to: '/dashboard/stock', icon: <FaBoxes /> },
-  { label: 'Wauzaji', to: '/dashboard/users', icon: <FaUsers /> },
+  { label: 'watumiaji', to: '/dashboard/users', icon: <FaUsers /> },
   { label: 'Repoti', to: '/dashboard/report', icon: <FaChartBar /> },
   { label: 'Matumizi', to: '/dashboard/expenses', icon: <FaMoneyBillWave /> },
   { label: 'Bidhaa', to: '/dashboard/products', icon: <FaBoxes /> },
